@@ -31,11 +31,11 @@ public class FindMyTeacherApplication {
         Teacher teacher = null;
         String inputText = event.getMessage().getText();
         if (inputText.startsWith("t00")) {
-            TeacherController teacherController = new TeacherController();
-            teacher = teacherController.getTeacherFromId(inputText);
-            String result = teacher.getName() + "is at " + teacher.getRoom();
 
-            return new TextMessage(result);
+            RestTemplate restTemplate = new RestTemplate();
+            teacher = restTemplate.getForObject("https://find-my-teacher.herokuapp.com/teacher/" + inputText, Teacher.class);
+
+            return new TextMessage(teacher.getName() + " is at " + teacher.getRoom());
         }
 
         System.out.println("event: " + event);
