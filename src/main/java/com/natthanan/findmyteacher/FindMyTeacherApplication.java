@@ -26,15 +26,17 @@ public class FindMyTeacherApplication {
 
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
-//        System.out.println("event: " + event);
-//        return new TextMessage(event.getMessage().getText());
+
         List<Teacher> teacher = null;
         String inputText = event.getMessage().getText();
         if (inputText.startsWith("0601")) {
             RestTemplate restTemplate = new RestTemplate();
             teacher = restTemplate.getForObject("https://find-my-teacher.herokuapp.com/teachers", ArrayList.class);
+            return new TextMessage(teacher.get(0).toString());
         }
-        return new TextMessage(teacher.get(0).toString());
+
+        System.out.println("event: " + event);
+        return new TextMessage(event.getMessage().getText());
     }
 
     @EventMapping
