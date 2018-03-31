@@ -11,6 +11,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootApplication
 @LineMessageHandler
 public class FindMyTeacherApplication {
@@ -25,13 +28,13 @@ public class FindMyTeacherApplication {
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
 //        System.out.println("event: " + event);
 //        return new TextMessage(event.getMessage().getText());
-        Teacher teacher = null;
+        List<Teacher> teacher = null;
         String inputText = event.getMessage().getText();
         if (inputText.startsWith("0601")) {
             RestTemplate restTemplate = new RestTemplate();
-            teacher = restTemplate.getForObject("https://find-my-teacher.herokuapp.com/teachers", Teacher.class);
+            teacher = restTemplate.getForObject("https://find-my-teacher.herokuapp.com/teachers", ArrayList.class);
         }
-        return new TextMessage(teacher.getName() + " is at " + teacher.getRoom());
+        return new TextMessage(teacher.get(0).getName() + " is at " + teacher.get(0).getRoom());
     }
 
     @EventMapping
