@@ -38,11 +38,10 @@ public class FindMyTeacherApplication {
         ArrayList<Teacher> teachers = null;
         String inputText = event.getMessage().getText();
         List<Message> messages = new ArrayList<>();
-        if (inputText.startsWith("t00")) {
+        if (inputText.startsWith("0601")) {
 
             RestTemplate restTemplate = new RestTemplate();
-            Teacher[] teacherss = restTemplate.getForObject("https://find-my-teacher.herokuapp.com/teachers/" + inputText, Teacher[].class);
-            ResponseEntity<List<Teacher>> teacherResponse = restTemplate.exchange("https://find-my-teacher.herokuapp.com/teachers/" + inputText, HttpMethod.GET, null, ParameterizedTypeReference.forType(Teacher.class));
+            ResponseEntity<List<Teacher>> teacherResponse = restTemplate.exchange("https://find-my-teacher.herokuapp.com/courses/" + inputText, HttpMethod.GET, null, ParameterizedTypeReference.forType(Teacher.class));
             teachers = (ArrayList<Teacher>) teacherResponse.getBody();
             for (Teacher teacher :
                     teachers) {
