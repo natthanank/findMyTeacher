@@ -29,7 +29,7 @@ public class FindMyTeacherApplication {
         String inputText = event.getMessage().getText();
         if (inputText.startsWith("0601")) {
             RestTemplate restTemplate = new RestTemplate();
-            teacher = restTemplate.getForObject("/teachers", Teacher.class);
+            teacher = restTemplate.getForObject("https://find-my-teacher.herokuapp.com/teachers", Teacher.class);
         }
         return new TextMessage(teacher.getName() + " is at " + teacher.getRoom());
     }
