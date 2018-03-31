@@ -34,7 +34,7 @@ public class FindMyTeacherApplication {
             RestTemplate restTemplate = new RestTemplate();
             teacher = restTemplate.getForObject("https://find-my-teacher.herokuapp.com/teachers", ArrayList.class);
         }
-        return new TextMessage(teacher.get(0).getName() + " is at " + teacher.get(0).getRoom());
+        return new TextMessage(teacher.get(0).toString());
     }
 
     @EventMapping
