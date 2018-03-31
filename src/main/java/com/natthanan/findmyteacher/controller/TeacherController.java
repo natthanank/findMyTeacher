@@ -6,6 +6,7 @@ import com.natthanan.findmyteacher.repository.CourseTeacherRepository;
 import com.natthanan.findmyteacher.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,5 +40,10 @@ public class TeacherController {
     public @ResponseBody Iterable<Teacher> getAllTeacherIdByCourse(@PathVariable String courseId) {
         List<String> teacherList = courseTeacherRepository.findTeacherIdFromCourse(courseId);
         return teacherRepository.findAllById(teacherList);
+    }
+
+    @GetMapping("/teacher/{teacherId}")
+    public @ResponseBody Teacher getTeacherFromId(@PathVariable String teacherId) {
+        return teacherRepository.findById(teacherId).get();
     }
 }

@@ -28,15 +28,13 @@ public class FindMyTeacherApplication {
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
 
-        Iterable<Teacher> teachers = null;
+        Teacher teacher = null;
         String inputText = event.getMessage().getText();
-        if (inputText.startsWith("0601")) {
+        if (inputText.startsWith("t00")) {
             TeacherController teacherController = new TeacherController();
-            teachers = teacherController.getAllTeachers();
-            String result = "";
-            for (Teacher teacher: teachers) {
-                result += teacher.getName() + " tel." + teacher.getTel() + "\n";
-            }
+            teacher = teacherController.getTeacherFromId(inputText);
+            String result = teacher.getName() + "is at " + teacher.getRoom();
+
             return new TextMessage(result);
         }
 
