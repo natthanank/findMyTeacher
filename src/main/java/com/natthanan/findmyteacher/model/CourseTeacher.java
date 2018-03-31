@@ -10,9 +10,11 @@ import javax.persistence.Table;
 public class CourseTeacher {
 
     @Id
-    @Column(name = "courseId")
+    @Column(name = "id")
+    private int id;
+    @Column(name = "course_id")
     private String courseId;
-    @Column(name = "teacherId")
+    @Column(name = "teacher_id")
     private Integer teacherId;
 
     public String getCourseId() {

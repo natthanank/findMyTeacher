@@ -3,21 +3,24 @@ package com.natthanan.findmyteacher.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "teachers")
+@Table(name = "teacher")
 public class Teacher {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @Column(name = "teacher_id")
+    private String id;
+    @Column(name = "teacher_name")
     private String name;
+    @Column(name = "teacher_tel")
     private String tel;
+    @Column(name = "teacher_room")
     private String room;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

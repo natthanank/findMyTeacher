@@ -38,7 +38,7 @@ public class TeacherController {
 
     @GetMapping(path = "/courses/{courseId}")
     public @ResponseBody Iterable<Teacher> getAllTeacherIdByCourse(@PathVariable String courseId) {
-        List<Integer> teacherList = courseTeacherRepository.findTeacherIdFromCourse(courseId);
+        List<String> teacherList = courseTeacherRepository.findTeacherIdFromCourse(courseId);
         return teacherRepository.findAllById(teacherList);
     }
 }

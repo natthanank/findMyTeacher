@@ -17,8 +17,8 @@ public class CourseTeacherRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public List<Integer> findTeacherIdFromCourse(String courseId) {
-        return this.jdbcTemplate.queryForList("SELECT teacherId FROM course_teacher WHERE courseId = ?", new Object[]{courseId}, Integer.class);
+    public List<String> findTeacherIdFromCourse(String courseId) {
+        return this.jdbcTemplate.queryForList("SELECT teacher_id FROM course_teacher WHERE course_id = ?", new Object[]{courseId}, String.class);
     }
 
 }

@@ -6,13 +6,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "courses")
+@Table(name = "course")
 public class Course {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "course_id")
     private String id;
-    @Column(name = "name")
+    @Column(name = "course_name")
     private String name;
 
     public String getId() {
