@@ -35,14 +35,14 @@ public class FindMyTeacherApplication {
     @EventMapping
     public List<Message> handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
 
-        ArrayList<Teacher> teachers = null;
+        List<Teacher> teachers = null;
         String inputText = event.getMessage().getText();
         List<Message> messages = new ArrayList<>();
         if (inputText.startsWith("0601")) {
 
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<List<Teacher>> teacherResponse = restTemplate.exchange("https://find-my-teacher.herokuapp.com/courses/" + inputText, HttpMethod.GET, null, ParameterizedTypeReference.forType(Teacher[].class));
-            teachers = (ArrayList<Teacher>) teacherResponse.getBody();
+            teachers = teacherResponse.getBody();
             for (Teacher teacher :
                     teachers) {
                 messages.add(new TextMessage(teacher.getName() + " is at " + teacher.getRoom()));
