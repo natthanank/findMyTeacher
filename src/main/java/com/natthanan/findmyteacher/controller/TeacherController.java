@@ -43,7 +43,7 @@ public class TeacherController {
     }
 
     @GetMapping("/teacher/{teacherId}")
-    public @ResponseBody Teacher getTeacherFromId(@PathVariable String teacherId) {
+    public Teacher getTeacherFromId(@PathVariable String teacherId) {
         return teacherRepository.findById(teacherId).get();
     }
 }
