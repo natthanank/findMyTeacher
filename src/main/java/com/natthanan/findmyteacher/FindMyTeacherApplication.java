@@ -41,8 +41,8 @@ public class FindMyTeacherApplication {
         if (inputText.startsWith("0601")) {
 
             RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<List<Teacher>> teacherResponse = restTemplate.exchange("https://find-my-teacher.herokuapp.com/courses/" + inputText, HttpMethod.GET, null, ParameterizedTypeReference.forType(Teacher[].class));
-            teachers = teacherResponse.getBody();
+            ResponseEntity<Teacher[]> teacherResponse = restTemplate.exchange("https://find-my-teacher.herokuapp.com/courses/" + inputText, HttpMethod.GET, null, ParameterizedTypeReference.forType(Teacher[].class));
+            teachers = Arrays.asList(teacherResponse.getBody());
             for (Teacher teacher :
                     teachers) {
                 messages.add(new TextMessage(teacher.getName() + " is at " + teacher.getRoom()));
