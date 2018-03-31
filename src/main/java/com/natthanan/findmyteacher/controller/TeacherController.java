@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "/")
 public class TeacherController {
 
     @Autowired
@@ -26,17 +25,17 @@ public class TeacherController {
     @Autowired
     private CourseTeacherRepository courseTeacherRepository;
 
-    @GetMapping(path = "/")
+    @GetMapping("/")
     public String index() {
-        return "Line Bot Test";
+        return "index";
     }
 
-    @GetMapping(path = "/teachers")
+    @GetMapping("/teachers")
     public @ResponseBody Iterable<Teacher> getAllTeachers() {
         return teacherRepository.findAll();
     }
 
-    @GetMapping(path = "/courses/{courseId}")
+    @GetMapping("/courses/{courseId}")
     public @ResponseBody Iterable<Teacher> getAllTeacherIdByCourse(@PathVariable String courseId) {
         List<String> teacherList = courseTeacherRepository.findTeacherIdFromCourse(courseId);
         return teacherRepository.findAllById(teacherList);
