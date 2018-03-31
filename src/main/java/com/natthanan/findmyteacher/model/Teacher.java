@@ -1,9 +1,12 @@
 package com.natthanan.findmyteacher.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "teacher")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Teacher {
 
     @Id

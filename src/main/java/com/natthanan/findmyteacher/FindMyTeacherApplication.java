@@ -3,6 +3,8 @@ package com.natthanan.findmyteacher;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
+import com.linecorp.bot.model.message.ImageMessage;
+import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
@@ -10,9 +12,14 @@ import com.natthanan.findmyteacher.controller.TeacherController;
 import com.natthanan.findmyteacher.model.Teacher;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @SpringBootApplication
@@ -26,20 +33,27 @@ public class FindMyTeacherApplication {
     }
 
     @EventMapping
-    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
+    public List<Message> handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
 
-        Teacher teacher = null;
+        ArrayList<Teacher> teachers = null;
         String inputText = event.getMessage().getText();
+        List<Message> messages = new ArrayList<>();
         if (inputText.startsWith("t00")) {
 
             RestTemplate restTemplate = new RestTemplate();
-            teacher = restTemplate.getForObject("https://find-my-teacher.herokuapp.com/teacher/" + inputText, Teacher.class);
+            Teacher[] teacherss = restTemplate.getForObject("https://find-my-teacher.herokuapp.com/teachers/" + inputText, Teacher[].class);
+            ResponseEntity<List<Teacher>> teacherResponse = restTemplate.exchange("https://find-my-teacher.herokuapp.com/teachers/" + inputText, HttpMethod.GET, null, ParameterizedTypeReference.forType(Teacher.class));
+            teachers = (ArrayList<Teacher>) teacherResponse.getBody();
+            for (Teacher teacher :
+                    teachers) {
+                messages.add(new TextMessage(teacher.getName() + " is at " + teacher.getRoom()));
+            }
 
-            return new TextMessage(teacher.getName() + " is at " + teacher.getRoom());
         }
-
-        System.out.println("event: " + event);
-        return new TextMessage(event.getMessage().getText());
+        return messages;
+//
+//        System.out.println("event: " + event);
+//        return new TextMessage(event.getMessage().getText());
     }
 
     @EventMapping
