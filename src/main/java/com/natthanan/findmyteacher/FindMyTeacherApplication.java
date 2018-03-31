@@ -18,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @SpringBootApplication
 @LineMessageHandler
@@ -32,8 +33,9 @@ public class FindMyTeacherApplication {
     public List<Message> handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
 
         String inputText = event.getMessage().getText();
+        // if input is course id, get teacher that take this courses
         if (inputText.matches("[-+]?\\d*\\.?\\d+")) {
-           return getTeacherFromCourseId(inputText);
+            return getTeacherFromCourseId(inputText);
         }
         return null;
     }
@@ -50,13 +52,16 @@ public class FindMyTeacherApplication {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<Teacher[]> teacherResponse = restTemplate.exchange("https://find-my-teacher.herokuapp.com/courses/" + courseId, HttpMethod.GET, null, ParameterizedTypeReference.forType(Teacher[].class));
             teachers = Arrays.asList(teacherResponse.getBody());
-            for (Teacher teacher :
-                    teachers) {
-                messages.add(new TextMessage(teacher.getName() + " is at " + teacher.getRoom()));
+            for (int i = 0; i < 10; i++) {
+                for (Teacher teacher :
+                        teachers) {
+                    messages.add(new TextMessage(teacher.getName() + " is at " + teacher.getRoom()));
+                }
             }
         } catch (Exception e) {
             messages.add(new TextMessage("Please enter the correct course id"));
         }
+
 
         return messages;
     }
