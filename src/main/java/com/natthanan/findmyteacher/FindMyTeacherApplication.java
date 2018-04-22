@@ -16,6 +16,7 @@ import com.linecorp.bot.model.richmenu.RichMenuSize;
 import com.linecorp.bot.model.richmenu.RichMenu.RichMenuBuilder;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
+import com.natthanan.findmyteacher.model.HotLine;
 import com.natthanan.findmyteacher.model.Teacher;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -70,6 +71,26 @@ public class FindMyTeacherApplication {
         System.out.println("event: " + event);
     }
 
+    private List<Message> getHotLineFromCategory(int category) {
+        List<Message> messages = new ArrayList<>();
+        List<HotLine> hotLines = null;
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<HotLine[]> hotLineResponse = restTemplate.exchange("https://find-my-teacher.herokuapp.com/hotlines/" + category, HttpMethod.GET, null, ParameterizedTypeReference.forType(HotLine[].class));
+            hotLines = Arrays.asList(hotLineResponse.getBody());
+            for (int i = 0; i < 10; i++) {
+                for (HotLine hotLine :
+                        hotLines) {
+                    messages.add(new TextMessage(hotLine.getTel()));
+                }
+            }
+        } catch (Exception e) {
+            messages.add(new TextMessage("Please enter the correct category"));
+        }
+
+
+        return messages;
+    }
     private List<Message> getTeacherFromCourseId(String courseId) {
         List<Message> messages = new ArrayList<>();
         List<Teacher> teachers = null;
