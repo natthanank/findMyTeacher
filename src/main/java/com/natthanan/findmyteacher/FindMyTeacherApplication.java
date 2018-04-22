@@ -71,12 +71,12 @@ public class FindMyTeacherApplication {
         System.out.println("event: " + event);
     }
 
-    private List<Message> getHotLineFromCategory(int category) {
+    private List<Message> getHotLineFromCategory(String category) {
         List<Message> messages = new ArrayList<>();
         List<HotLine> hotLines = null;
         try {
             RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<HotLine[]> hotLineResponse = restTemplate.exchange("https://find-my-teacher.herokuapp.com/hotlines/" + category, HttpMethod.GET, null, ParameterizedTypeReference.forType(HotLine[].class));
+            ResponseEntity<HotLine[]> hotLineResponse = restTemplate.exchange("https://find-my-teacher.herokuapp.com/hotlines/" + Integer.parseInt(category), HttpMethod.GET, null, ParameterizedTypeReference.forType(HotLine[].class));
             hotLines = Arrays.asList(hotLineResponse.getBody());
             for (int i = 0; i < 10; i++) {
                 for (HotLine hotLine :
@@ -117,7 +117,7 @@ public class FindMyTeacherApplication {
                 .builder("K7AJeM33RfE2AXkEfuSAMYHxp7mEWoeMZMBD/jvwJDVwXwXTdtsbH7ZmWIu0csrlOh1Ec3smWjYnKhRaxlt2f6Aa+17Kftuw3XweTNE1IH69u8eVMy1nGGIq0pRHDzT4BsvX9YCPXfrWegeMtwzaaQdB04t89/1O/w1cDnyilFU=")
                 .build();
 
-        List<Message> messages = getTeacherFromCourseId(event.getMessage().getText());
+        List<Message> messages = getHotLineFromCategory(event.getMessage().getText());
         BotApiResponse botApiResponse;
         for (Message message: messages) {
             PushMessage pushMessage = new PushMessage(
