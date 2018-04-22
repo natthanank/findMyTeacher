@@ -2,12 +2,18 @@ package com.natthanan.findmyteacher;
 
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.PushMessage;
+import com.linecorp.bot.model.action.Action;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.response.BotApiResponse;
+import com.linecorp.bot.model.richmenu.RichMenu;
+import com.linecorp.bot.model.richmenu.RichMenuArea;
+import com.linecorp.bot.model.richmenu.RichMenuBounds;
+import com.linecorp.bot.model.richmenu.RichMenuSize;
+import com.linecorp.bot.model.richmenu.RichMenu.RichMenuBuilder;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import com.natthanan.findmyteacher.model.Teacher;
@@ -31,6 +37,17 @@ public class FindMyTeacherApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(FindMyTeacherApplication.class, args);
+
+        RichMenuArea richMenuArea = new RichMenuArea(new RichMenuBounds(0, 0, 400, 270), null);
+        List<RichMenuArea> richMenuAreas = new ArrayList();
+        richMenuAreas.add(richMenuArea);
+        RichMenuBuilder richMenu = RichMenu.builder();
+        richMenu.size(new RichMenuSize(400, 270))
+            .selected(true)
+            .name("Test")
+            .chatBarText("06012222")
+            .areas(richMenuAreas)
+            .build();
     }
 
     @EventMapping
@@ -40,9 +57,11 @@ public class FindMyTeacherApplication {
         // if input is course id, get teacher that take this courses
         if (inputText.matches("[-+]?\\d*\\.?\\d+")) {
             sendPushMessage(event);
+            // get userid for push
+            event.getSource().getUserId();
         }
-        // get userid for push
-        event.getSource().getUserId();
+
+        
 
     }
 
@@ -90,6 +109,8 @@ public class FindMyTeacherApplication {
                 return;
             }
         }
+        
+
 
 
     }
