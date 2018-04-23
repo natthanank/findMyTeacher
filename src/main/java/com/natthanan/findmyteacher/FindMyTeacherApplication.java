@@ -49,20 +49,25 @@ import javax.imageio.ImageIO;
 @LineMessageHandler
 public class FindMyTeacherApplication {
 
+    public static RichMenuIdResponse richMenuResponse;
 
     public static void main(String[] args) {
         SpringApplication.run(FindMyTeacherApplication.class, args);
 
-        RichMenuArea richMenuArea = new RichMenuArea(new RichMenuBounds(0, 0, 400, 270), null);
-        List<RichMenuArea> richMenuAreas = new ArrayList();
-        richMenuAreas.add(richMenuArea);
-        RichMenuBuilder richMenu = RichMenu.builder();
-        richMenu.size(new RichMenuSize(400, 270))
-            .selected(true)
-            .name("Test")
-            .chatBarText("06012222")
-            .areas(richMenuAreas)
-            .build();
+        final LineMessagingClient client = LineMessagingClient
+                .builder("K7AJeM33RfE2AXkEfuSAMYHxp7mEWoeMZMBD/jvwJDVwXwXTdtsbH7ZmWIu0csrlOh1Ec3smWjYnKhRaxlt2f6Aa+17Kftuw3XweTNE1IH69u8eVMy1nGGIq0pRHDzT4BsvX9YCPXfrWegeMtwzaaQdB04t89/1O/w1cDnyilFU=")
+                .build();
+
+            try {
+                ClassPathResource image = new ClassPathResource("/image/2.jpg");
+                BufferedImage bufferedImage = ImageIO.read(image.getInputStream());
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                ImageIO.write(bufferedImage, "jpg", bos);
+                richMenuResponse = client.createRichMenu(MyRichMenu.getRichMenu()).get();
+                client.setRichMenuImage(richMenuResponse.getRichMenuId(), "image/jpeg", bos.toByteArray());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
     }
 
     @EventMapping
@@ -125,15 +130,10 @@ public class FindMyTeacherApplication {
         //     }
         // }
         try {
-            ClassPathResource image = new ClassPathResource("/image/2.jpg");
-            BufferedImage bufferedImage = ImageIO.read(image.getInputStream());
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage, "jpg", bos);
-            RichMenuIdResponse richMenuResponse = client.createRichMenu(MyRichMenu.getRichMenu()).get();
-            client.setRichMenuImage(richMenuResponse.getRichMenuId(), "image/jpeg", bos.toByteArray());
+            
             client.linkRichMenuIdToUser(event.getSource().getUserId(), richMenuResponse.getRichMenuId());
-            System.out.println(event.getSource().getUserId());
-        } catch (IOException | InterruptedException | ExecutionException e) {
+            
+        } catch (Exception e) {
             System.out.println(event.getMessage().getText());
             return;
         }
