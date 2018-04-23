@@ -138,7 +138,7 @@ public class FindMyTeacherApplication {
             }
             
         } catch (Exception e) {
-            System.out.println(event.getMessage().getText());
+            e.printStackTrace();
             return;
         }
         
