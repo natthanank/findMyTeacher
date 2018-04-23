@@ -131,8 +131,8 @@ public class FindMyTeacherApplication {
             ImageIO.write(bufferedImage, "jpg", bos);
             RichMenuIdResponse richMenuResponse = client.createRichMenu(MyRichMenu.getRichMenu()).get();
             client.setRichMenuImage(richMenuResponse.getRichMenuId(), "image/jpeg", bos.toByteArray());
-            
             client.linkRichMenuIdToUser(event.getSource().getUserId(), richMenuResponse.getRichMenuId());
+            System.out.println(event.getSource().getUserId());
         } catch (IOException | InterruptedException | ExecutionException e) {
             System.out.println(event.getMessage().getText());
             return;
