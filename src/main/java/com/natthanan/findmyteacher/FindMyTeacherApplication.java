@@ -75,11 +75,12 @@ public class FindMyTeacherApplication {
 
         String inputText = event.getMessage().getText();
         // if input is course id, get teacher that take this courses
-        if (inputText.matches("[-+]?\\d*\\.?\\d+")) {
-            sendPushMessage(event);
-            // get userid for push
-            event.getSource().getUserId();
-        }
+        // if (inputText.matches("[-+]?\\d*\\.?\\d+")) {
+        //     sendPushMessage(event);
+        //     // get userid for push
+        //     event.getSource().getUserId();
+        // }
+        sendPushMessage(event);
 
         
 
