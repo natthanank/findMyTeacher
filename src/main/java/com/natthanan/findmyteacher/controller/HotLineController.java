@@ -3,7 +3,6 @@ package com.natthanan.findmyteacher.controller;
 import java.util.List;
 
 import com.natthanan.findmyteacher.model.HotLine;
-import com.natthanan.findmyteacher.model.Teacher;
 import com.natthanan.findmyteacher.repository.HotLineRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

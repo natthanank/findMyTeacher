@@ -2,7 +2,6 @@ package com.natthanan.findmyteacher.rowmapper;
 
 
 import com.natthanan.findmyteacher.model.HotLine;
-import com.natthanan.findmyteacher.model.Teacher;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.lang.Nullable;
 
