@@ -122,9 +122,8 @@ public class FindMyTeacherApplication {
         //     }
         // }
         try {
-            ClassPathResource image = new ClassPathResource("image/2.jpg");
-            File imagFile = new File("/image/2.jpg");
-            BufferedImage bufferedImage = ImageIO.read(imagFile);
+            ClassPathResource image = new ClassPathResource("/image/2.jpg");
+            BufferedImage bufferedImage = ImageIO.read(image.getFile());
             WritableRaster raster = bufferedImage.getRaster();
             DataBufferByte data = (DataBufferByte) raster.getDataBuffer();
             RichMenuIdResponse richMenuResponse = client.createRichMenu(MyRichMenu.getRichMenu()).get();
