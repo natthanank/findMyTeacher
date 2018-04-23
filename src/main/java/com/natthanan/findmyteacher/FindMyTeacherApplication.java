@@ -145,7 +145,6 @@ public class FindMyTeacherApplication {
         try {
             if (event.getMessage().getText().equals("Back")) {
                 client.unlinkRichMenuIdFromUser(event.getSource().getUserId());
-                client.deleteRichMenu(richMenuResponse.getRichMenuId());
             } else {
                 client.linkRichMenuIdToUser(event.getSource().getUserId(), richMenuResponse.getRichMenuId());
             }
