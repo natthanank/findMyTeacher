@@ -37,9 +37,9 @@ public class MyRichMenu {
     private static RichMenuArea createRichMenuArea(String corner) {
           
         if (corner.equals("left")) {
-            return new RichMenuArea(new RichMenuBounds(0, 0, 1250, 1686), new MessageAction("0", "0"));
+            return new RichMenuArea(new RichMenuBounds(0, 0, 1250, 1686), new MessageAction("Back", "Back"));
         } else {
-            return new RichMenuArea(new RichMenuBounds(1250, 0, 1250, 1686), new MessageAction("1", "0"));
+            return new RichMenuArea(new RichMenuBounds(1250, 0, 1250, 1686), new MessageAction("Finish", "Finish"));
         }
     }
 }

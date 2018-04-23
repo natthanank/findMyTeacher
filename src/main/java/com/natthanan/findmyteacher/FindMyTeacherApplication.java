@@ -130,8 +130,11 @@ public class FindMyTeacherApplication {
         //     }
         // }
         try {
-            
-            client.linkRichMenuIdToUser(event.getSource().getUserId(), richMenuResponse.getRichMenuId());
+            if (event.getMessage().getText().equals("Back")) {
+                client.unlinkRichMenuIdFromUser(event.getSource().getUserId());
+            } else {
+                client.linkRichMenuIdToUser(event.getSource().getUserId(), richMenuResponse.getRichMenuId());
+            }
             
         } catch (Exception e) {
             System.out.println(event.getMessage().getText());
