@@ -30,9 +30,11 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -125,10 +127,11 @@ public class FindMyTeacherApplication {
         try {
             ClassPathResource image = new ClassPathResource("/image/2.jpg");
             BufferedImage bufferedImage = ImageIO.read(image.getInputStream());
-            WritableRaster raster = bufferedImage.getRaster();
-            DataBufferByte data = (DataBufferByte) raster.getDataBuffer();
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "jpg", bos);
             RichMenuIdResponse richMenuResponse = client.createRichMenu(MyRichMenu.getRichMenu()).get();
-            client.setRichMenuImage(richMenuResponse.getRichMenuId(), "image/jpeg", data.getData());
+            client.setRichMenuImage(richMenuResponse.getRichMenuId(), "image/jpeg", bos.toByteArray());
+            
             client.linkRichMenuIdToUser(event.getSource().getUserId(), richMenuResponse.getRichMenuId());
         } catch (IOException | InterruptedException | ExecutionException e) {
             System.out.println(event.getMessage().getText());
