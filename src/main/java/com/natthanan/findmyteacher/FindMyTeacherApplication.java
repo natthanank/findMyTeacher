@@ -14,6 +14,7 @@ import com.linecorp.bot.model.richmenu.RichMenu;
 import com.linecorp.bot.model.richmenu.RichMenuArea;
 import com.linecorp.bot.model.richmenu.RichMenuBounds;
 import com.linecorp.bot.model.richmenu.RichMenuIdResponse;
+import com.linecorp.bot.model.richmenu.RichMenuListResponse;
 import com.linecorp.bot.model.richmenu.RichMenuResponse;
 import com.linecorp.bot.model.richmenu.RichMenuSize;
 import com.linecorp.bot.model.richmenu.RichMenu.RichMenuBuilder;
@@ -57,14 +58,23 @@ public class FindMyTeacherApplication {
         final LineMessagingClient client = LineMessagingClient
                 .builder("K7AJeM33RfE2AXkEfuSAMYHxp7mEWoeMZMBD/jvwJDVwXwXTdtsbH7ZmWIu0csrlOh1Ec3smWjYnKhRaxlt2f6Aa+17Kftuw3XweTNE1IH69u8eVMy1nGGIq0pRHDzT4BsvX9YCPXfrWegeMtwzaaQdB04t89/1O/w1cDnyilFU=")
                 .build();
-
+           
             try {
-                ClassPathResource image = new ClassPathResource("/image/2.jpg");
-                BufferedImage bufferedImage = ImageIO.read(image.getInputStream());
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                ImageIO.write(bufferedImage, "jpg", bos);
-                richMenuResponse = client.createRichMenu(MyRichMenu.getRichMenu()).get();
-                client.setRichMenuImage(richMenuResponse.getRichMenuId(), "image/jpeg", bos.toByteArray());
+                List<RichMenuResponse> richMenus = client.getRichMenuList().get().getRichMenus();
+
+                for (int i = 0; i < richMenus.size(); i++) {
+                    if (richMenus.get(i).getName().equals("SecondRichMenu")) {
+                        break;
+                    } else if ((i == richMenus.size() - 1) && !richMenus.get(i).equals("SecondRichMenu")) {
+                        ClassPathResource image = new ClassPathResource("/image/2.jpg");
+                        BufferedImage bufferedImage = ImageIO.read(image.getInputStream());
+                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                        ImageIO.write(bufferedImage, "jpg", bos);
+                        richMenuResponse = client.createRichMenu(MyRichMenu.getRichMenu()).get();
+                        client.setRichMenuImage(richMenuResponse.getRichMenuId(), "image/jpeg", bos.toByteArray());
+                    }
+                }
+                
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -132,8 +142,8 @@ public class FindMyTeacherApplication {
         // }
         try {
             if (event.getMessage().getText().equals("Back")) {
-                client.unlinkRichMenuIdFromUser(event.getSource().getUserId());
-                BotApiResponse botApiResponse = client.pushMessage(new PushMessage(event.getSource().getUserId(), new TextMessage(event.getSource().getUserId()))).get();
+                RichMenuResponse richMenuIdResponse = client.unlinkRichMenuIdFromUser(event.getSource().getUserId()).;
+                client.deleteRichMenu(richMenuResponse.getRichMenuId());
             } else {
                 client.linkRichMenuIdToUser(event.getSource().getUserId(), richMenuResponse.getRichMenuId());
             }
