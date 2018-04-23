@@ -3,6 +3,7 @@ package com.natthanan.findmyteacher;
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.action.Action;
+import com.linecorp.bot.model.error.ErrorResponse;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
@@ -130,7 +131,7 @@ public class FindMyTeacherApplication {
             client.setRichMenuImage(richMenuResponse.getRichMenuId(), "image/jpeg", data.getData());
             client.linkRichMenuIdToUser(event.getSource().getUserId(), richMenuResponse.getRichMenuId());
         } catch (IOException | InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+            System.out.println(event.getMessage().getText());
             return;
         }
         
