@@ -132,7 +132,7 @@ public class FindMyTeacherApplication {
         try {
             if (event.getMessage().getText().equals("Back")) {
                 client.unlinkRichMenuIdFromUser(event.getSource().getUserId());
-                BotApiResponse botApiResponse = client.pushMessage(new PushMessage(event.getSource().getUserId(), new Message(event.getSource().getUserId()));
+                BotApiResponse botApiResponse = client.pushMessage(new PushMessage(event.getSource().getUserId(), new TextMessage(event.getSource().getUserId()))).get();
             } else {
                 client.linkRichMenuIdToUser(event.getSource().getUserId(), richMenuResponse.getRichMenuId());
             }
