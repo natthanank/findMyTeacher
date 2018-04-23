@@ -128,6 +128,7 @@ public class FindMyTeacherApplication {
             DataBufferByte data = (DataBufferByte) raster.getDataBuffer();
             RichMenuIdResponse richMenuResponse = client.createRichMenu(MyRichMenu.getRichMenu()).get();
             client.setRichMenuImage(richMenuResponse.getRichMenuId(), "image/jpeg", data.getData());
+            client.linkRichMenuIdToUser(event.getSource().getUserId(), richMenuResponse.getRichMenuId());
         } catch (IOException | InterruptedException | ExecutionException e) {
             e.printStackTrace();
             return;
