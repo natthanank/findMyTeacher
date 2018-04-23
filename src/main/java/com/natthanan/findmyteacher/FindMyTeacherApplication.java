@@ -123,7 +123,7 @@ public class FindMyTeacherApplication {
         // }
         try {
             ClassPathResource image = new ClassPathResource("image/2.jpg");
-            File imagFile = new File("../image/2.jpg");
+            File imagFile = new File("/image/2.jpg");
             BufferedImage bufferedImage = ImageIO.read(imagFile);
             WritableRaster raster = bufferedImage.getRaster();
             DataBufferByte data = (DataBufferByte) raster.getDataBuffer();
