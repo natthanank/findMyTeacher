@@ -60,17 +60,7 @@ public class FindMyTeacherApplication {
                 .build();
            
             try {
-                List<RichMenuResponse> richMenus = client.getRichMenuList().get().getRichMenus();
-
-                for (int i = 0; i < richMenus.size(); i++) {
-                    if (richMenus.get(i).getName().equals("SecondRichMenu")) {
-                        break;
-                    } else if ((i == richMenus.size() - 1) && !(richMenus.get(i).equals("SecondRichMenu"))) {
-                        
-                    }
-                }
-
-                ClassPathResource image = new ClassPathResource("/image/2.jpg");
+                        ClassPathResource image = new ClassPathResource("/image/SecondPage.jpg");
                         BufferedImage bufferedImage = ImageIO.read(image.getInputStream());
                         ByteArrayOutputStream bos = new ByteArrayOutputStream();
                         ImageIO.write(bufferedImage, "jpg", bos);
