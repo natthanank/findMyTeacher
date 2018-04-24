@@ -33,7 +33,7 @@ public class MyRichMenu {
                     createRichMenuArea("<-")))
             .chatBarText("SecondRichMenu")
             .selected(true)
-            .size(new RichMenuSize(1200, 810))
+            .size(RichMenuSize.FULL)
             .build();
         }
         return richMenu;
