@@ -43,17 +43,17 @@ public class MyRichMenu {
           
         switch (corner) {
             case "6":
-                return new RichMenuArea(new RichMenuBounds(0, 0, 400, 405), new URIAction("Facebook", "https://www.facebook.com"));
+                return new RichMenuArea(new RichMenuBounds(0, 0, 833, 843), new URIAction("Facebook", "https://www.facebook.com"));
             case "7":
-                return new RichMenuArea(new RichMenuBounds(400, 0, 400, 405), new URIAction("OreMange", "http://www.oremanga.com/"));
+                return new RichMenuArea(new RichMenuBounds(833, 0, 833, 843), new URIAction("OreMange", "http://www.oremanga.com/"));
             case "8":
-                return new RichMenuArea(new RichMenuBounds(800, 0, 400, 405), new URIAction("Line", "https://scdn.line-apps.com/n/line_official_v2/img/MdFRM/type_richmenu_guide/1200x810/01.png"));
+                return new RichMenuArea(new RichMenuBounds(1666, 0, 834, 843), new URIAction("Line", "https://scdn.line-apps.com/n/line_official_v2/img/MdFRM/type_richmenu_guide/1200x810/01.png"));
             case "9":
-                return new RichMenuArea(new RichMenuBounds(400, 405, 400, 405), new URIAction("HotLine", "https://hilight.kapook.com/view/84563"));
+                return new RichMenuArea(new RichMenuBounds(833, 843, 833, 843), new URIAction("HotLine", "https://hilight.kapook.com/view/84563"));
             case "10":
-                return new RichMenuArea(new RichMenuBounds(800, 405, 400, 405), new URIAction("MRT", "http://www.bangkokmetro.co.th/FareRate.aspx?Lang=Th"));
+                return new RichMenuArea(new RichMenuBounds(1666, 843, 834, 843), new URIAction("MRT", "http://www.bangkokmetro.co.th/FareRate.aspx?Lang=Th"));
             default:
-                return new RichMenuArea(new RichMenuBounds(0, 405, 400, 405), new MessageAction("Back", "Back"));
+                return new RichMenuArea(new RichMenuBounds(0, 843, 833, 843), new MessageAction("Back", "Back"));
         }
     }
 }
