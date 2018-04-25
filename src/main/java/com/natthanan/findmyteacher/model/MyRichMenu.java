@@ -49,7 +49,7 @@ public class MyRichMenu {
             case "8":
                 return new RichMenuArea(new RichMenuBounds(1666, 0, 834, 843), new URIAction("Line", "https://scdn.line-apps.com/n/line_official_v2/img/MdFRM/type_richmenu_guide/1200x810/01.png"));
             case "9":
-                return new RichMenuArea(new RichMenuBounds(833, 843, 833, 843), new URIAction("HotLine", "https://hilight.kapook.com/view/84563"));
+                return new RichMenuArea(new RichMenuBounds(833, 843, 833, 843), new URIAction("HotLine", "https://hotline-km.herokuapp.com/"));
             case "10":
                 return new RichMenuArea(new RichMenuBounds(1666, 843, 834, 843), new URIAction("MRT", "http://www.bangkokmetro.co.th/FareRate.aspx?Lang=Th"));
             default:
