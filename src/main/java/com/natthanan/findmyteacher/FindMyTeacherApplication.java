@@ -55,21 +55,21 @@ public class FindMyTeacherApplication {
     public static void main(String[] args) {
         SpringApplication.run(FindMyTeacherApplication.class, args);
 
-        final LineMessagingClient client = LineMessagingClient
-                .builder("K7AJeM33RfE2AXkEfuSAMYHxp7mEWoeMZMBD/jvwJDVwXwXTdtsbH7ZmWIu0csrlOh1Ec3smWjYnKhRaxlt2f6Aa+17Kftuw3XweTNE1IH69u8eVMy1nGGIq0pRHDzT4BsvX9YCPXfrWegeMtwzaaQdB04t89/1O/w1cDnyilFU=")
-                .build();
+        // final LineMessagingClient client = LineMessagingClient
+        //         .builder("K7AJeM33RfE2AXkEfuSAMYHxp7mEWoeMZMBD/jvwJDVwXwXTdtsbH7ZmWIu0csrlOh1Ec3smWjYnKhRaxlt2f6Aa+17Kftuw3XweTNE1IH69u8eVMy1nGGIq0pRHDzT4BsvX9YCPXfrWegeMtwzaaQdB04t89/1O/w1cDnyilFU=")
+        //         .build();
            
-            try {
-                        ClassPathResource image = new ClassPathResource("/image/SecondPage.jpg");
-                        BufferedImage bufferedImage = ImageIO.read(image.getInputStream());
-                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                        ImageIO.write(bufferedImage, "jpg", bos);
-                        richMenuResponse = client.createRichMenu(MyRichMenu.getRichMenu()).get();
-                        client.setRichMenuImage(richMenuResponse.getRichMenuId(), "image/jpeg", bos.toByteArray());
+        //     try {
+        //                 ClassPathResource image = new ClassPathResource("/image/SecondPage.jpg");
+        //                 BufferedImage bufferedImage = ImageIO.read(image.getInputStream());
+        //                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        //                 ImageIO.write(bufferedImage, "jpg", bos);
+        //                 richMenuResponse = client.createRichMenu(MyRichMenu.getRichMenu()).get();
+        //                 client.setRichMenuImage(richMenuResponse.getRichMenuId(), "image/jpeg", bos.toByteArray());
                 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        //     } catch (Exception e) {
+        //         e.printStackTrace();
+        //     }
     }
 
     @EventMapping
@@ -82,7 +82,7 @@ public class FindMyTeacherApplication {
         //     // get userid for push
         //     event.getSource().getUserId();
         // }
-        sendPushMessage(event);
+        // sendPushMessage(event);
 
         
 
@@ -93,59 +93,59 @@ public class FindMyTeacherApplication {
         System.out.println("event: " + event);
     }
 
-    private List<Message> getHotLineFromCategory(String category) {
-        List<Message> messages = new ArrayList<>();
-        List<HotLine> hotLines = null;
-        try {
-            RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<HotLine[]> hotLineResponse = restTemplate.exchange("https://find-my-teacher.herokuapp.com/hotlines/" + Integer.parseInt(category), HttpMethod.GET, null, ParameterizedTypeReference.forType(HotLine[].class));
-            hotLines = Arrays.asList(hotLineResponse.getBody());
-            for (int i = 0; i < 10; i++) {
-                for (HotLine hotLine :
-                        hotLines) {
-                    messages.add(new TextMessage(hotLine.getTel()));
-                }
-            }
-        } catch (Exception e) {
-            messages.add(new TextMessage("Please enter the correct category"));
-        }
+    // private List<Message> getHotLineFromCategory(String category) {
+    //     List<Message> messages = new ArrayList<>();
+    //     List<HotLine> hotLines = null;
+    //     try {
+    //         RestTemplate restTemplate = new RestTemplate();
+    //         ResponseEntity<HotLine[]> hotLineResponse = restTemplate.exchange("https://find-my-teacher.herokuapp.com/hotlines/" + Integer.parseInt(category), HttpMethod.GET, null, ParameterizedTypeReference.forType(HotLine[].class));
+    //         hotLines = Arrays.asList(hotLineResponse.getBody());
+    //         for (int i = 0; i < 10; i++) {
+    //             for (HotLine hotLine :
+    //                     hotLines) {
+    //                 messages.add(new TextMessage(hotLine.getTel()));
+    //             }
+    //         }
+    //     } catch (Exception e) {
+    //         messages.add(new TextMessage("Please enter the correct category"));
+    //     }
 
 
-        return messages;
-    }
+    //     return messages;
+    // }
 
-    private void sendPushMessage(MessageEvent<TextMessageContent> event) {
-        final LineMessagingClient client = LineMessagingClient
-                .builder("K7AJeM33RfE2AXkEfuSAMYHxp7mEWoeMZMBD/jvwJDVwXwXTdtsbH7ZmWIu0csrlOh1Ec3smWjYnKhRaxlt2f6Aa+17Kftuw3XweTNE1IH69u8eVMy1nGGIq0pRHDzT4BsvX9YCPXfrWegeMtwzaaQdB04t89/1O/w1cDnyilFU=")
-                .build();
+    // private void sendPushMessage(MessageEvent<TextMessageContent> event) {
+    //     final LineMessagingClient client = LineMessagingClient
+    //             .builder("K7AJeM33RfE2AXkEfuSAMYHxp7mEWoeMZMBD/jvwJDVwXwXTdtsbH7ZmWIu0csrlOh1Ec3smWjYnKhRaxlt2f6Aa+17Kftuw3XweTNE1IH69u8eVMy1nGGIq0pRHDzT4BsvX9YCPXfrWegeMtwzaaQdB04t89/1O/w1cDnyilFU=")
+    //             .build();
 
-        // List<Message> messages = getHotLineFromCategory(event.getMessage().getText());
-        // BotApiResponse botApiResponse;
-        // for (Message message: messages) {
-        //     PushMessage pushMessage = new PushMessage(
-        //             event.getSource().getUserId(),
-        //             message);
-        //     try {
-        //         botApiResponse = client.pushMessage(pushMessage).get();
-        //     } catch (InterruptedException | ExecutionException e) {
-        //         e.printStackTrace();
-        //         return;
-        //     }
-        // }
-        try {
-            if (event.getMessage().getText().equals("Back")) {
-                client.unlinkRichMenuIdFromUser(event.getSource().getUserId());
-            } else {
-                client.linkRichMenuIdToUser(event.getSource().getUserId(), richMenuResponse.getRichMenuId());
-            }
+    //     // List<Message> messages = getHotLineFromCategory(event.getMessage().getText());
+    //     // BotApiResponse botApiResponse;
+    //     // for (Message message: messages) {
+    //     //     PushMessage pushMessage = new PushMessage(
+    //     //             event.getSource().getUserId(),
+    //     //             message);
+    //     //     try {
+    //     //         botApiResponse = client.pushMessage(pushMessage).get();
+    //     //     } catch (InterruptedException | ExecutionException e) {
+    //     //         e.printStackTrace();
+    //     //         return;
+    //     //     }
+    //     // }
+    //     try {
+    //         if (event.getMessage().getText().equals("Back")) {
+    //             client.unlinkRichMenuIdFromUser(event.getSource().getUserId());
+    //         } else {
+    //             client.linkRichMenuIdToUser(event.getSource().getUserId(), richMenuResponse.getRichMenuId());
+    //         }
             
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //         return;
+    //     }
         
 
 
 
-    }
+    // }
 }
